@@ -45,6 +45,7 @@ In the Render dashboard under **Environment**, add:
 2. Wait for the build to complete (green status)
 3. Note your service URL: `https://your-service-name.onrender.com`
 4. Test by opening `https://your-service-name.onrender.com/mcp` in a browser — you should get a response from the server
+   - `https://your-service-name.onrender.com/health` returns `{"status":"ok"}` and can be set as the service's **Health Check Path** in Render
 
 > **⚠️ Security Warning:** Claude does not currently authenticate when connecting to remote MCP servers. This means your Render endpoint is publicly accessible — anyone who discovers the URL can query and **mutate** your Intervals.icu data (e.g. create/update events). Do not share your service URL publicly. If this is a concern, use the [Local Setup](#local-setup-alternative) instead, which keeps everything on your machine behind stdio.
 

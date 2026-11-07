@@ -7,7 +7,15 @@ the server module and tool modules without creating cyclic imports.
 
 import os
 from mcp.server.fastmcp import FastMCP  # pylint: disable=import-error
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 from intervals_mcp_server.api.client import setup_api_client
 
 mcp: FastMCP = FastMCP("intervals-icu", lifespan=setup_api_client, host=os.getenv("FASTMCP_HOST", "127.0.0.1"), port=int(os.getenv("FASTMCP_PORT", "8000")))  # pylint: disable=invalid-name
+
+
+@mcp.custom_route("/health", methods=["GET"])
+async def health(_request: Request) -> JSONResponse:
+    """Unauthenticated liveness probe for hosting platforms; reveals no account data."""
+    return JSONResponse({"status": "ok"})
